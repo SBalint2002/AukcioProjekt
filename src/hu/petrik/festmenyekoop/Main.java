@@ -23,11 +23,14 @@ public class Main {
         kettod();
         kettoe();
         out.println(festmenyek);
+        haroma();
+        haromb();
+        haromc();
     }
 
     //BEOLVASÁS --------------------------------------------------------------------
 
-    public static void bekeres(){
+    public static void bekeres() {
         String fajlNev = "festmenyek.csv";
         try {
             beolvas(fajlNev);
@@ -37,6 +40,7 @@ public class Main {
             err.println("Ismeretlen hiba történt a fájl beolvasása során");
         }
     }
+
     public static void beolvas(String fajlNev) throws IOException {
         FileReader fr = new FileReader(fajlNev);
         BufferedReader br = new BufferedReader(fr);
@@ -54,14 +58,14 @@ public class Main {
 
     //MÁSODIK FELADAT ------------------------------------------------------------------------
 
-    public static void kettoa(){
+    public static void kettoa() {
         Festmeny f1 = new Festmeny("A java szépségei", "Sárándi Bálint", "Expresszionista");
         f1.licit(50);
         festmenyek.add(f1);
         festmenyek.add(new Festmeny("A java csúnyaságai", "Sárándi Bálint", "Kubizmus"));
     }
 
-    public static void kettob(){
+    public static void kettob() {
         Scanner sc = new Scanner(in);
         out.print("Hány festményt szeretne hozzáadni a listához?\nVálasz: ");
         int darabszam = sc.nextInt();
@@ -76,14 +80,14 @@ public class Main {
         }
     }
 
-    public static void kettod(){
+    public static void kettod() {
         Random r = new Random();
         for (int i = 0; i < 20; i++) {
-            festmenyek.get((int) (Math.random() * festmenyek.size())).licit(r.nextInt(100-10) + 10);
+            festmenyek.get((int) (Math.random() * festmenyek.size())).licit(r.nextInt(100 - 10) + 10);
         }
     }
 
-    public static void kettoe(){
+    public static void kettoe() {
         Scanner sc = new Scanner(in);
         int index = -1;
         double licitertek = 0;
@@ -91,9 +95,9 @@ public class Main {
             out.print("Melyik festményre licitálna: ");
             index = sc.nextInt();
             sc.nextLine();
-            if (index == 0){
+            if (index == 0) {
                 break;
-            }else if (festmenyek.get(index-1).getElkelt()) {
+            } else if (festmenyek.get(index - 1).getElkelt()) {
                 out.println("Elkelt!");
             } else if (index > festmenyek.size() || index < 0) {
                 out.println("Nem létező sorszám!");
@@ -107,9 +111,9 @@ public class Main {
                         licitertek = sc.nextInt();
                     }
                 } else if (licitertek == -1) {
-                    festmenyek.get(index-1).licit();
+                    festmenyek.get(index - 1).licit();
                 } else {
-                    festmenyek.get(index-1).licit(licitertek);
+                    festmenyek.get(index - 1).licit(licitertek);
                 }
             }
         }
@@ -121,6 +125,34 @@ public class Main {
     }
 
     //HARMADIK FELADAT -------------------------------------------------------
+    public static void haroma() {
+        int legdragabb = 0;
+        for (int i = 0; i < festmenyek.size(); i++) {
+            if (festmenyek.get(i).getLegmagasabbLicit() > legdragabb) {
+                legdragabb = festmenyek.get(i).getLegmagasabbLicit();
+            }
+        }
+        out.printf("\nLegdrágábban elkelt festmény: %d", legdragabb);
+    }
 
+    public static void haromb() {
+        boolean vane = false;
+        for (int i = 0; i < festmenyek.size(); i++) {
+            if (festmenyek.get(i).getLicitekSzama() > 10) {
+                vane = true;
+            }
+        }
+        out.printf("\nVan 10-nél többször licitált dolog?: %b\n", vane);
+    }
+
+    public static void haromc() {
+        int szamlalo = 0;
+        for (int i = 0; i < festmenyek.size(); i++) {
+            if (!festmenyek.get(i).getElkelt()) {
+                szamlalo++;
+            }
+        }
+        out.printf("%d db festmény nem kelt el!", szamlalo);
+    }
 
 }
