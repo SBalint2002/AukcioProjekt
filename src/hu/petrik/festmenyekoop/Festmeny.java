@@ -1,8 +1,6 @@
 package hu.petrik.festmenyekoop;
 
 import java.time.LocalDateTime;
-import java.util.Random;
-import java.util.Scanner;
 
 public class Festmeny {
     private String cim;
@@ -80,6 +78,10 @@ public class Festmeny {
             licitekSzama++;
             legutolsoLicitIdeje = LocalDateTime.now();
         }
+    }
+
+    public String fajlbaMasolas(){
+        return String.format("%s;%s;%s", festo, cim, stilus);
     }
 
 

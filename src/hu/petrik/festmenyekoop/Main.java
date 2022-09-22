@@ -1,15 +1,15 @@
 package hu.petrik.festmenyekoop;
 
-import javax.swing.plaf.basic.BasicMenuBarUI;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static java.lang.System.*;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
 
@@ -22,10 +22,11 @@ public class Main {
         bekeres();
         kettod();
         kettoe();
-        out.println(festmenyek);
+        //out.println(festmenyek);
         haroma();
         haromb();
         haromc();
+        haromd();
     }
 
     //BEOLVASÁS --------------------------------------------------------------------
@@ -91,7 +92,7 @@ public class Main {
         Scanner sc = new Scanner(in);
         int index = -1;
         double licitertek = 0;
-        while (index != 0 || index > festmenyek.size()) {
+        while (true) {
             out.print("Melyik festményre licitálna: ");
             index = sc.nextInt();
             sc.nextLine();
@@ -110,16 +111,14 @@ public class Main {
                         out.print("Licit érték: ");
                         licitertek = sc.nextInt();
                     }
-                } else if (licitertek == -1) {
-                    festmenyek.get(index - 1).licit();
                 } else {
                     festmenyek.get(index - 1).licit(licitertek);
                 }
             }
         }
-        for (int i = 0; i < festmenyek.size(); i++) {
-            if (festmenyek.get(i).getLicitekSzama() > 0) {
-                festmenyek.get(i).setElkelt(true);
+        for (Festmeny festmeny : festmenyek) {
+            if (festmeny.getLicitekSzama() > 0) {
+                festmeny.setElkelt(true);
             }
         }
     }
@@ -127,9 +126,9 @@ public class Main {
     //HARMADIK FELADAT -------------------------------------------------------
     public static void haroma() {
         int legdragabb = 0;
-        for (int i = 0; i < festmenyek.size(); i++) {
-            if (festmenyek.get(i).getLegmagasabbLicit() > legdragabb) {
-                legdragabb = festmenyek.get(i).getLegmagasabbLicit();
+        for (Festmeny festmeny : festmenyek) {
+            if (festmeny.getLegmagasabbLicit() > legdragabb) {
+                legdragabb = festmeny.getLegmagasabbLicit();
             }
         }
         out.printf("\nLegdrágábban elkelt festmény: %d", legdragabb);
@@ -137,9 +136,10 @@ public class Main {
 
     public static void haromb() {
         boolean vane = false;
-        for (int i = 0; i < festmenyek.size(); i++) {
-            if (festmenyek.get(i).getLicitekSzama() > 10) {
+        for (Festmeny festmeny : festmenyek) {
+            if (festmeny.getLicitekSzama() > 10) {
                 vane = true;
+                break;
             }
         }
         out.printf("\nVan 10-nél többször licitált dolog?: %b\n", vane);
@@ -147,12 +147,19 @@ public class Main {
 
     public static void haromc() {
         int szamlalo = 0;
-        for (int i = 0; i < festmenyek.size(); i++) {
-            if (!festmenyek.get(i).getElkelt()) {
+        for (Festmeny festmeny : festmenyek) {
+            if (!festmeny.getElkelt()) {
                 szamlalo++;
             }
         }
-        out.printf("%d db festmény nem kelt el!", szamlalo);
+        out.printf("%d db festmény nem kelt el!\n", szamlalo);
+    }
+
+    public static void haromd(){
+        festmenyek.sort((x, y) -> (x.getLegmagasabbLicit() > y.getLegmagasabbLicit()) ? -1 : 1);
+        for (var x : festmenyek){
+            out.println(x);
+        }
     }
 
 }
