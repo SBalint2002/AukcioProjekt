@@ -1,6 +1,10 @@
 package hu.petrik.festmenyekoop;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.Scanner;
 
 public class Festmeny {
     private String cim;
@@ -46,11 +50,58 @@ public class Festmeny {
         this.elkelt = elkelt;
     }
 
-    public void licit(){
+    public void licit(int mertek) {
+        if (mertek < 10 || mertek > 100) {
+            System.out.println("10 és 100 közötti szám kell!");
+            if (elkelt == false && this.licitekSzama > 0) {
+                int szam = (int)(((legmagasabbLicit * 1.1) + 5) / 10) *10;
+                this.legmagasabbLicit = szam;
+                this.licitekSzama++;
+                this.legutolsoLicitIdeje = LocalDateTime.now();
+            }
+        }
+        if (elkelt == true) {
+            System.out.println("Elkelt már");
+        } else if (this.licitekSzama == 0) {
+            this.legmagasabbLicit = 100;
+            this.licitekSzama++;
+            this.legutolsoLicitIdeje = LocalDateTime.now();
+        } else {
+            int szam = (int)(((legmagasabbLicit * ((mertek / 100) + 1)) + 5) / 10) * 10;
+            this.legmagasabbLicit = szam;
+            this.licitekSzama++;
+            this.legutolsoLicitIdeje = LocalDateTime.now();
+        }
+
 
     }
 
-    public void licit(int mertek){
+    public void licit() {
+        if (elkelt == true) {
+            System.out.println("Elkelt már");
+        } else if (this.licitekSzama == 0) {
+            this.legmagasabbLicit = 100;
+            this.licitekSzama++;
+            this.legutolsoLicitIdeje = LocalDateTime.now();
+        } else {
+            this.legmagasabbLicit = (int) (legmagasabbLicit * 1.1);
+            this.licitekSzama++;
+            this.legutolsoLicitIdeje = LocalDateTime.now();
+        }
+    }
+
+    @Override
+    public String toString() {
+        String elkelte = "";
+        if (elkelt == true) {
+            elkelte = "elkelt";
+            return festo + ":" + cim + "(" + stilus + ")\n" + elkelte + "\n" + legmagasabbLicit + "$ - " + legutolsoLicitIdeje + "(összesen: " + licitekSzama + " db)";
+        } else {
+            return festo + ":" + cim + "(" + stilus + ")\n" +
+                    "\n" + legmagasabbLicit + "$ - " + legutolsoLicitIdeje + "(összesen: " + licitekSzama + " db)";
+        }
 
     }
+
+
 }
