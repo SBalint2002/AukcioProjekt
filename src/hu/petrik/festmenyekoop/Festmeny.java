@@ -1,9 +1,13 @@
 package hu.petrik.festmenyekoop;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Festmeny {
@@ -97,11 +101,9 @@ public class Festmeny {
             elkelte = "elkelt";
             return festo + ":" + cim + "(" + stilus + ")\n" + elkelte + "\n" + legmagasabbLicit + "$ - " + legutolsoLicitIdeje + "(összesen: " + licitekSzama + " db)";
         } else {
-            return festo + ":" + cim + "(" + stilus + ")\n" +
-                    "\n" + legmagasabbLicit + "$ - " + legutolsoLicitIdeje + "(összesen: " + licitekSzama + " db)";
+            return festo + ":" + cim + "(" + stilus + ")\n" + "\n" + legmagasabbLicit + "$ - " + legutolsoLicitIdeje + "(összesen: " + licitekSzama + " db)";
         }
 
     }
-
 
 }
