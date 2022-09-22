@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import static java.lang.System.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
@@ -19,17 +20,17 @@ public class Main {
         festmenyek.add(f1);
         festmenyek.add(new Festmeny("A java csúnyaságai", "Sárándi Bálint", "Kubizmus"));
 
-        Scanner sc = new Scanner(System.in);
+        Scanner sc = new Scanner(in);
 
-        System.out.print("Hány festményt szeretne hozzáadni a listához?\nVálasz: ");
+        out.print("Hány festményt szeretne hozzáadni a listához?\nVálasz: ");
         int darabszam = sc.nextInt();
         sc.nextLine();
         for (int i = 0; i < darabszam; i++) {
-            System.out.print("Cím: ");
+            out.print("Cím: ");
             String cim = sc.nextLine();
-            System.out.print("Név: ");
+            out.print("Név: ");
             String nev = sc.nextLine();
-            System.out.print("Stílus: ");
+            out.print("Stílus: ");
             String stilus = sc.nextLine();
             festmenyek.add(new Festmeny(cim, nev, stilus));
         }
@@ -39,12 +40,10 @@ public class Main {
         try {
             beolvas(fajlNev);
         } catch (FileNotFoundException e) {
-            System.err.printf("Hiba miatt nem található az %s fájl\n", fajlNev);
+            err.printf("Hiba miatt nem található az %s fájl\n", fajlNev);
         } catch (IOException e) {
-            System.err.println("Ismeretlen hiba történt a fájl beolvasása során");
+            err.println("Ismeretlen hiba történt a fájl beolvasása során");
         }
-
-        System.out.println(festmenyek);
 
         for (int i = 0; i < 20; i++) {
             festmenyek.get((int) (Math.random() * festmenyek.size())).licit((int) (Math.random() * 100) + 10);
@@ -54,6 +53,38 @@ public class Main {
             int feldob = (int)(Math.random() * festmenyek.size());
             festmenyek.get(feldob).licit();
         }*/
+
+
+        int index = -1;
+        while (index > festmenyek.size() || index < 0) {
+            out.print("Melyik festményre licitálna: ");
+            index = sc.nextInt();
+            out.print("\n");
+            if (festmenyek.get(index).getElkelt()) {
+                out.println("Elkelt!");
+            }
+            if (index > festmenyek.size() || index < 0){
+                out.println("Nem létező sorszám!");
+            }
+        }
+
+        int licitertek = -1;
+        while (licitertek < 0) {
+            out.print("Licit érték: ");
+            licitertek = sc.nextInt();
+            if (licitertek == 0) {
+                festmenyek.get(index).licit();
+            } else {
+                festmenyek.get(index).licit(licitertek);
+            }
+        }
+
+
+
+
+
+
+        out.println(festmenyek);
     }
 
     public static void beolvas(String fajlNev) throws IOException {

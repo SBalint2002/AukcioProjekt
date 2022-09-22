@@ -101,6 +101,8 @@ public class Festmeny {
         }
     }
 
+
+
     @Override
     public String toString() {
         return String.format("\n\nFestő: %s(%s)\n%b\nLegmagasabb licit: %d$ - "
