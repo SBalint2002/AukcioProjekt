@@ -5,16 +5,18 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Main {
-    static List<Festmeny> festmenyek;
+
+    public static List<Festmeny> festmenyek = new ArrayList<>();
+
     public static void main(String[] args) {
         festmenyek = new ArrayList<>();
-        festmenyek.add(new Festmeny("A java szépségei", "Sárándi Bálint", "Expresszionista"));
+        Festmeny f1 = new Festmeny("A java szépségei", "Sárándi Bálint", "Expresszionista");
+        f1.licit(50);
+        festmenyek.add(f1);
         festmenyek.add(new Festmeny("A java csúnyaságai", "Sárándi Bálint", "Kubizmus"));
 
         Scanner sc = new Scanner(System.in);
@@ -34,24 +36,33 @@ public class Main {
 
 
         String fajlNev = "festmenyek.csv";
-        try{
+        try {
             beolvas(fajlNev);
-        }catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             System.err.printf("Hiba miatt nem található az %s fájl\n", fajlNev);
         } catch (IOException e) {
             System.err.println("Ismeretlen hiba történt a fájl beolvasása során");
         }
 
         System.out.println(festmenyek);
+
+        for (int i = 0; i < 20; i++) {
+            festmenyek.get((int) (Math.random() * festmenyek.size())).licit((int) (Math.random() * 100) + 10);
+        }
+
+        /*for (int i = 0; i < 20; i++) {
+            int feldob = (int)(Math.random() * festmenyek.size());
+            festmenyek.get(feldob).licit();
+        }*/
     }
 
     public static void beolvas(String fajlNev) throws IOException {
         FileReader fr = new FileReader(fajlNev);
         BufferedReader br = new BufferedReader(fr);
         String sor = br.readLine();
-        while(sor != null && !sor.equals("")){
+        while (sor != null && !sor.equals("")) {
             String[] tomb = sor.split(";");
-            Festmeny festmeny = new Festmeny(tomb[1], tomb[0], tomb[2]);
+            Festmeny festmeny = new Festmeny(tomb[0], tomb[1], tomb[2]);
             festmenyek.add(festmeny);
             sor = br.readLine();
         }
