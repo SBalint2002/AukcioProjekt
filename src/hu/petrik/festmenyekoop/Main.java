@@ -22,7 +22,7 @@ public class Main {
         bekeres();
         kettod();
         kettoe();
-        //out.println(festmenyek);
+        out.println(festmenyek);
         haroma();
         haromb();
         haromc();
@@ -68,7 +68,7 @@ public class Main {
 
     public static void kettob() {
         Scanner sc = new Scanner(in);
-        out.print("Hány festményt szeretne hozzáadni a listához?\nVálasz: ");
+        out.print("\nHány festményt szeretne hozzáadni a listához?\nVálasz: ");
         int darabszam = sc.nextInt();
         for (int i = 0; i < darabszam; i++) {
             out.print("Cím: ");
@@ -157,9 +157,7 @@ public class Main {
 
     public static void haromd(){
         festmenyek.sort((x, y) -> (x.getLegmagasabbLicit() > y.getLegmagasabbLicit()) ? -1 : 1);
-        for (var x : festmenyek){
-            out.println(x);
-        }
+        out.println(festmenyek);
     }
 
 }

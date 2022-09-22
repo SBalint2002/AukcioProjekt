@@ -80,10 +80,6 @@ public class Festmeny {
         }
     }
 
-    public String fajlbaMasolas(){
-        return String.format("%s;%s;%s", festo, cim, stilus);
-    }
-
 
     @Override
     public String toString() {
