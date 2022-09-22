@@ -55,34 +55,36 @@ public class Main {
         }*/
 
 
+
         int index = -1;
-        while (index > festmenyek.size() || index < 0) {
+        int licitertek = 0;
+        while(index != 0 || index > festmenyek.size()){
             out.print("Melyik festményre licitálna: ");
             index = sc.nextInt();
-            out.print("\n");
             if (festmenyek.get(index).getElkelt()) {
                 out.println("Elkelt!");
-            }
-            if (index > festmenyek.size() || index < 0){
+            } else if (index > festmenyek.size() || index < 0) {
                 out.println("Nem létező sorszám!");
-            }
-        }
-
-        int licitertek = -1;
-        while (licitertek < 0) {
-            out.print("Licit érték: ");
-            licitertek = sc.nextInt();
-            if (licitertek == 0) {
-                festmenyek.get(index).licit();
+            } else if (index == 0) {
+                break;
             } else {
-                festmenyek.get(index).licit(licitertek);
+                out.print("Licit érték (%-ban 10-100): ");
+                licitertek = sc.nextInt();
+                if (licitertek < 0 || licitertek > 100){
+                    continue;
+                } else if (licitertek == 0) {
+                    festmenyek.get(index).licit();
+                }else {
+                    festmenyek.get(index).licit(licitertek);
+                }
             }
         }
 
-
-
-
-
+        for (int i = 0; i < festmenyek.size(); i++) {
+            if (festmenyek.get(i).getLicitekSzama() > 0){
+                festmenyek.get(i).setElkelt(true);
+            }
+        }
 
         out.println(festmenyek);
     }
