@@ -52,55 +52,35 @@ public class Festmeny {
         this.elkelt = elkelt;
     }
 
-    public void licitXszer(int x) {
-        Random r = new Random();
-        for (Festmeny f : this.festmenyek) {
-            for (int i = 0; i < 20; i++) {
-                f.licit((r.nextInt(101 - 10) + 10));
-            }
-        }
-
-    }
-
-    Scanner sc = new Scanner(System.in);
-
-    public void licit(int mertek) {
-        if (elkelt == true) {
+    public void licit(double mertek) {
+        if (elkelt) {
             System.out.println("Elkelt már");
+        } else if (licitekSzama != 0) {
+            legmagasabbLicit = (int)(100 +((legmagasabbLicit*mertek)/100));
+            licitekSzama++;
+            legutolsoLicitIdeje = LocalDateTime.now();
+        } else if (mertek < 10 || mertek > 100) {
+            System.out.println("Hiba!!!! 10 és 100 közötti szám kell!");
         } else {
-            if (mertek < 10 || mertek > 100) {
-                System.out.println("10 és 100 közötti szám kell!");
-                this.legmagasabbLicit += legmagasabbLicit * 0.10;
-                this.licitekSzama++;
-                this.legutolsoLicitIdeje = LocalDateTime.now();
-            } else {
-                if (mertek + legmagasabbLicit > legmagasabbLicit) {
-                    this.legmagasabbLicit += mertek;
-                    this.licitekSzama++;
-                    this.legutolsoLicitIdeje = LocalDateTime.now();
-                }
-            }
+            legmagasabbLicit = 100;
+            licitekSzama++;
+            legutolsoLicitIdeje = LocalDateTime.now();
         }
-
-
     }
 
     public void licit() {
-        if (elkelt == true) {
+        if (elkelt) {
             System.out.println("Elkelt már");
+        } else if (licitekSzama == 0) {
+            legmagasabbLicit = 100;
+            licitekSzama++;
+            legutolsoLicitIdeje = LocalDateTime.now();
         } else {
-            if (licitekSzama == 0) {
-                legmagasabbLicit = 100;
-                licitekSzama++;
-                legutolsoLicitIdeje = LocalDateTime.now();
-            } else {
-                legmagasabbLicit *= 1.10;
-                licitekSzama++;
-                legutolsoLicitIdeje = LocalDateTime.now();
-            }
+            legmagasabbLicit *= 1.10;
+            licitekSzama++;
+            legutolsoLicitIdeje = LocalDateTime.now();
         }
     }
-
 
 
     @Override
